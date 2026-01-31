@@ -145,11 +145,32 @@ def save_markdown_result(
     if "layoutParsingResults" in result.get("result", {}):
         layout_results = result["result"]["layoutParsingResults"]
         for i, res in enumerate(layout_results):
+            # 1. 保存 Markdown 文本
             md_filename = output_path / f"{base_name}_{i}.md"
             markdown_text = res.get("markdown", {}).get("text", "")
             with open(md_filename, "w", encoding="utf-8") as f:
                 f.write(markdown_text)
             print(f"Markdown 结果已保存: {md_filename}")
+
+            # 2. 下载并保存图片
+            markdown_images = res.get("markdown", {}).get("images", {})
+            if markdown_images:
+                for img_rel_path, img_url in markdown_images.items():
+                    try:
+                        # API 返回的是图片 URL，需要下载
+                        response = requests.get(img_url, timeout=30)
+                        response.raise_for_status()
+                        img_bytes = response.content
+                        # 构建完整路径
+                        img_full_path = output_path / img_rel_path
+                        img_full_path.parent.mkdir(parents=True, exist_ok=True)
+                        # 保存图片
+                        with open(img_full_path, "wb") as img_file:
+                            img_file.write(img_bytes)
+                        print(f"图片已保存: {img_full_path}")
+                    except Exception as e:
+                        print(f"警告: 图片 {img_rel_path} 保存失败: {e}")
+                        continue
     # 原格式兼容
     else:
         markdown_content = result.get("result", {}).get("markdown", "")

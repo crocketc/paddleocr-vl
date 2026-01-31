@@ -22,13 +22,13 @@ presets:
   标准:
     useDocOrientationClassify: true
     useDocUnwarping: true
-    useChartRecognition: false
+    useChartRecognition: true
     useLayoutDetection: true
     layoutThreshold: 0.5
     visualize: false
     outputFormat: markdown  # 只输出 Markdown
 
-  # 精细模式 - 最高精度，适合复杂文档
+  # 精细模式 - 最高精度，适合复杂文档（平衡强化版）
   精细:
     useDocOrientationClassify: true
     useDocUnwarping: true
@@ -43,6 +43,12 @@ presets:
     relevelTitles: true
     visualize: false
     outputFormat: both  # 同时输出 Markdown 和 JSON
+
+    # 平衡强化参数
+    layoutUnclipRatio: 1.5      # 扩大检测框范围，捕获更多边缘内容
+    repetitionPenalty: 1.1      # 轻度重复抑制
+    temperature: 0.5            # 平衡识别稳定性
+    topP: 0.85                  # 平衡结果多样性
 
 # ============================================================
 # 参数说明与自定义配置
