@@ -15,7 +15,7 @@
 ### 安装依赖
 
 ```bash
-pip install pyyaml requests
+pip install -r requirements.txt
 ```
 
 ### 配置 Token

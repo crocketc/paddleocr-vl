@@ -1,0 +1,8 @@
+# PaddleOCR-VL 依赖包
+# 安装方式: pip install -r requirements.txt
+
+# HTTP 请求库
+requests>=2.31.0
+
+# YAML 配置文件解析
+PyYAML>=6.0

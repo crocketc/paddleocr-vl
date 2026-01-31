@@ -45,3 +45,6 @@ htmlcov/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+# Claude Code 配置
+.claude/
