@@ -1,0 +1,151 @@
+# ============================================================
+# PaddleOCR-VL 参数配置文件
+# ============================================================
+# Token 从 .env 文件中自动读取（PADDLEOCR_TOKEN）
+# Token 获取地址：https://aistudio.baidu.com/account/accessToken
+# ============================================================
+
+# ============================================================
+# 预设模式（用户使用时只需选择模式名称）
+# ============================================================
+presets:
+  # 快速模式 - 适合简单文档，处理速度快
+  快速:
+    useDocOrientationClassify: false
+    useDocUnwarping: false
+    useChartRecognition: false
+    useLayoutDetection: false
+    visualize: false
+    outputFormat: markdown  # 只输出 Markdown
+
+  # 标准模式 - 平衡速度与精度，适合大多数场景
+  标准:
+    useDocOrientationClassify: true
+    useDocUnwarping: true
+    useChartRecognition: false
+    useLayoutDetection: true
+    layoutThreshold: 0.5
+    visualize: false
+    outputFormat: markdown  # 只输出 Markdown
+
+  # 精细模式 - 最高精度，适合复杂文档
+  精细:
+    useDocOrientationClassify: true
+    useDocUnwarping: true
+    useChartRecognition: true
+    useLayoutDetection: true
+    layoutThreshold: 0.3
+    layoutNms: true
+    prettifyMarkdown: true
+    showFormulaNumber: true
+    restructurePages: true
+    mergeTables: true
+    relevelTitles: true
+    visualize: false
+    outputFormat: both  # 同时输出 Markdown 和 JSON
+
+# ============================================================
+# 参数说明与自定义配置
+# 修改下方参数可覆盖预设模式的配置
+# ============================================================
+options:
+  # ========== 文档矫正 ==========
+  # 图片方向矫正：自动识别并矫正 0°、90°、180°、270° 的图片
+  use_doc_orientation_classify: null  # true | false | null(使用预设)
+
+  # 图片扭曲矫正：矫正褶皱、倾斜等扭曲情况
+  use_doc_unwarping: null  # true | false | null(使用预设)
+
+  # ========== 版面检测 ==========
+  # 版面区域检测排序：自动检测文档中不同区域并排序
+  use_layout_detection: null  # true | false | null(使用预设)
+
+  # 检测得分阈值：0-1 之间的浮点数，值越小检测越宽松
+  layout_threshold: null  # 0.1~1.0 | null(使用预设，默认0.5)
+
+  # NMS后处理：移除重复或高度重叠的区域框
+  layout_nms: null  # true | false | null(使用预设)
+
+  # 检测框扩张系数：大于 0 的浮点数
+  layout_unclip_ratio: null  # 默认 1.0
+
+  # 重叠框过滤方式
+  layout_merge_bboxes_mode: null  # large(保留大框) | small(保留小框) | union(都保留) | null
+
+  # 几何形状表示模式
+  layout_shape_mode: null  # rect(矩形) | quad(四边形) | poly(多边形) | auto(自动) | null
+
+  # ========== 内容识别 ==========
+  # 图表识别：解析柱状图、饼图等并转为表格
+  use_chart_recognition: null  # true | false | null(使用预设)
+
+  # Prompt 类型：仅在 useLayoutDetection=false 时生效
+  prompt_label: null  # ocr | formula | table | chart | null
+
+  # ========== 推理参数 ==========
+  # 重复抑制强度：结果出现重复内容时调高
+  repetition_penalty: null  # 1.0~2.0 | null
+
+  # 识别稳定性：结果不稳定时调低，漏识别时调高
+  temperature: null  # 0.1~1.0 | null
+
+  # 结果可信范围：结果发散时调低
+  top_p: null  # 0.1~1.0 | null
+
+  # 最小图像尺寸：输入图片太小时调高
+  min_pixels: null  # 整数 | null
+
+  # 最大图像尺寸：图片太大时调低以节省资源
+  max_pixels: null  # 整数 | null
+
+  # ========== 输出格式 ==========
+  # 公式编号展示：Markdown 中是否包含公式编号
+  show_formula_number: null  # true | false | null(使用预设)
+
+  # 多页结果重构：用于跨页表格合并和标题级别识别
+  restructure_pages: null  # true | false | null(使用预设)
+
+  # 跨页表格合并：将跨页表格合并为一个
+  merge_tables: null  # true | false | null(使用预设)
+
+  # 段落标题级别识别：自动识别标题层级
+  relevel_titles: null  # true | false | null(使用预设)
+
+  # Markdown 美化：输出美化后的 Markdown
+  prettify_markdown: null  # true | false | null(使用预设)
+
+  # 可视化：返回可视化结果图（会增加响应时间）
+  visualize: null  # true | false | null(使用预设)
+
+# ============================================================
+# 输出配置
+# ============================================================
+output:
+  # 输出格式：markdown(默认) | json | both
+  format: markdown  # markdown | json | both
+
+  # JSON 输出路径（当 format=json 或 both 时生效）
+  json_file: result.json
+
+  # Markdown 输出目录（当 format=markdown 或 both 时生效）
+  markdown_dir: output
+
+# ============================================================
+# API 配置
+# ============================================================
+api:
+  # API 端点地址（AI Studio PaddleOCR-VL）
+  base_url: https://l3s4h7i4v7keefk4.aistudio-app.com/layout-parsing
+
+  # Token 从 .env 文件中自动读取（PADDLEOCR_TOKEN）
+  # 如需手动设置，可在此处填写，但推荐使用 .env 文件
+  token: null
+
+  # 请求超时时间（秒）
+  timeout: 300
+
+  # 最大重试次数
+  max_retries: 3
+
+  # 认证方式：header 使用 Authorization: token {TOKEN}
+  auth_type: header
