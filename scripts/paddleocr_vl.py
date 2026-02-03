@@ -61,7 +61,12 @@ def call_ocr_api(
     Returns:
         API 响应结果
     """
-    base_url = api_config.get("base_url", "https://l3s4h7i4v7keefk4.aistudio-app.com/layout-parsing")
+    base_url = api_config.get("base_url")
+    if not base_url:
+        raise ValueError(
+            "API URL 未设置，请在 scripts/.env 文件中配置 PADDLEOCR_API_URL\n"
+            "获取地址：https://aistudio.baidu.com/paddleocr/task"
+        )
     timeout = api_config.get("timeout", 300)
     max_retries = api_config.get("max_retries", 3)
 
@@ -360,8 +365,9 @@ def main():
     # 检查 .env 文件是否存在
     if not DEFAULT_ENV_PATH.exists():
         print(f"错误: 配置文件不存在: {DEFAULT_ENV_PATH}")
-        print(f"请创建 .env 文件并配置 PADDLEOCR_TOKEN")
-        print(f"Token 获取地址: https://aistudio.baidu.com/account/accessToken")
+        print(f"请创建 .env 文件并配置以下必需项：")
+        print(f"  1. PADDLEOCR_TOKEN - 从 https://aistudio.baidu.com/account/accessToken 获取")
+        print(f"  2. PADDLEOCR_API_URL - 从 https://aistudio.baidu.com/paddleocr/task 获取")
         sys.exit(1)
 
     # 检查文件是否存在

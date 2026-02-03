@@ -141,7 +141,10 @@ output:
 # ============================================================
 api:
   # API 端点地址（AI Studio PaddleOCR-VL）
-  base_url: https://l3s4h7i4v7keefk4.aistudio-app.com/layout-parsing
+  # 注意：每个用户的 API URL 都不同，请在 .env 文件中配置 PADDLEOCR_API_URL
+  # 获取地址：https://aistudio.baidu.com/paddleocr/task
+  # 点击"API"按钮，选择模型后可看到 API_URL
+  base_url: null
 
   # Token 从 .env 文件中自动读取（PADDLEOCR_TOKEN）
   # 如需手动设置，可在此处填写，但推荐使用 .env 文件

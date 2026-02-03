@@ -33,6 +33,28 @@ cp scripts/.env.example scripts/.env
 PADDLEOCR_TOKEN=your_api_token_here
 ```
 
+### 配置 API URL
+
+每个用户都有专属的 API URL，需要从 AI Studio 获取：
+
+1. 访问 [百度 AI Studio - PaddleOCR 任务页](https://aistudio.baidu.com/paddleocr/task)
+
+2. 点击页面上的 **"API"** 按钮：
+
+![PaddleOCR 主页面](README_assets/paddleocr-main-page.png)
+
+3. 在弹出的 API 调用窗口中：
+   - 选择模型（推荐 `PaddleOCR-VL-1.5`）
+   - 复制代码中的 `API_URL` 值
+
+![API 调用配置](README_assets/api-config-page.png)
+
+4. 将获取的 URL 填入 `scripts/.env` 文件：
+
+```bash
+PADDLEOCR_API_URL=https://xxxxxxxx.aistudio-app.com/layout-parsing
+```
+
 ### 使用方法
 
 ```bash
