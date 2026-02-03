@@ -1,6 +1,9 @@
-# PaddleOCR-VL Skill
+---
+name: paddleocr-vl
+description: 基于百度飞桨 PaddleOCR-VL-1.5 的文档识别技能。当用户需要对 PDF、PNG、JPG、BMP、TIF 等格式的文档进行 OCR 文字识别时使用此技能。支持文字、表格、公式、图表识别，输出 Markdown 格式结果。
+---
 
-基于百度飞桨 PaddleOCR-VL-1.5 的文档识别技能，支持 PDF/PNG/JPG/BMP/TIF 等格式的 OCR 识别，输出 Markdown 格式结果。
+# PaddleOCR-VL
 
 ## 功能特点
 
